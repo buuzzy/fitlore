@@ -36,14 +36,10 @@ fitlore doesn't fight that. It's designed around it:
 ## Quickstart
 
 ```bash
-# Recommended: npx degit (faster, no git history)
-npx degit buuzzy/fitlore fitlore && mkdir -p ~/.workbuddy/skills && cp -r fitlore ~/.workbuddy/skills/
-
-# Alternative: git clone
-git clone https://github.com/buuzzy/fitlore.git && mkdir -p ~/.workbuddy/skills && cp -r fitlore ~/.workbuddy/skills/
+npx degit buuzzy/fitlore fitlore
 ```
 
-(For Claude Code, copy into `~/.claude/skills/` instead. For a single project, use `<project>/.claude/skills/`.)
+Then move the `fitlore` folder into your agent's skills directory (the location depends on your agent — check its documentation; user-level or project-level both work) and start a new session. Alternative: `git clone https://github.com/buuzzy/fitlore.git`.
 
 Then just say **"help me set up"** (or 「帮我建档」). A few minutes later you have a profile, and your first logged workout can follow immediately.
 
@@ -150,7 +146,7 @@ fitlore/
 
 ## Requirements
 
-- Any AI-agent environment with file access (WorkBuddy, Claude Code, …) and Python 3.8+ (standard library only)
+- Any AI-agent environment with file access and Python 3.8+ (standard library only)
 - Charts are powered by [Apache ECharts](https://echarts.apache.org/), pre-embedded into every generated report — the person *viewing* a report installs nothing
 
 ## License

@@ -5,7 +5,7 @@ metadata:
   author: nakocai
   version: 0.2.0
   license: MIT
-  compatibility: 任意具备文件读写与 python3（仅标准库）的 AI Agent 环境，如 WorkBuddy、Claude Code
+  compatibility: 任意具备文件读写与 python3（仅标准库）的 AI Agent 环境
 ---
 
 # fitlore · 锻炼健康追踪

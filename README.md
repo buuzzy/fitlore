@@ -36,14 +36,10 @@ fitlore 不跟这种懒惰搏斗，而是围绕它设计：
 ## 快速开始
 
 ```bash
-# 推荐：npx degit（更快，无 git 历史）
-npx degit buuzzy/fitlore fitlore && mkdir -p ~/.workbuddy/skills && cp -r fitlore ~/.workbuddy/skills/
-
-# 备选：git clone
-git clone https://github.com/buuzzy/fitlore.git && mkdir -p ~/.workbuddy/skills && cp -r fitlore ~/.workbuddy/skills/
+npx degit buuzzy/fitlore fitlore
 ```
 
-（Claude Code 用户把拷贝目标换成 `~/.claude/skills/`；单个项目使用则放 `<项目>/.claude/skills/`。）
+然后把 `fitlore` 文件夹放入你的 Agent 的技能目录（目录位置以你所用 Agent 的文档为准，用户级或项目级均可），重启会话即可生效。备选方式：`git clone https://github.com/buuzzy/fitlore.git`。
 
 装好后直接说「帮我建档」。几分钟后你就有了一份个人档案，可以立刻记录第一次训练。
 
@@ -150,7 +146,7 @@ fitlore/
 
 ## 环境要求
 
-- 任意具备文件读写能力的 AI Agent 环境（WorkBuddy、Claude Code 等）+ Python 3.8+（仅标准库）
+- 任意具备文件读写能力的 AI Agent 环境 + Python 3.8+（仅标准库）
 - 图表基于 [Apache ECharts](https://echarts.apache.org/)，已预嵌入每份生成的报告——看报告的人什么都不用装
 
 ## 许可证
