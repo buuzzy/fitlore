@@ -8,7 +8,7 @@
 
 An AI-agent skill that tracks your workouts and body metrics — built **low-frequency-native** for people who *don't* log every day.
 
-![fitlore dashboard](docs/screenshots/showcase-overview.png)
+![fitlore dashboard](assets/images/showcase-overview.png)
 
 ## Why fitlore
 
@@ -47,13 +47,15 @@ Then just say **"help me set up"** (or 「帮我建档」). A few minutes later 
 
 The images below come from a built-in fictional example (data included in `examples/`) that exercises every visualization the skill can render — body composition, training cadence, exercise progress and sleep, all at once:
 
-![training sections](docs/screenshots/showcase-training.png)
+![weekly training](assets/images/showcase-weekly.png)
+
+![exercise progress](assets/images/showcase-exercise.png)
 
 - **Weight −4.4kg, body fat −4.4pp, muscle +0.7kg** — the textbook shape of a successful cut: both down-lines while muscle holds
 - **39 sessions across 12 weeks** with one planned deload week (W7) shown honestly as a dip, not hidden
 - **Every exercise line trending up** — progression as an outcome, not a target
 
-![sleep](docs/screenshots/showcase-sleep.png)
+![sleep](assets/images/showcase-sleep.png)
 
 - **Sleep duration and subjective score trending up** alongside training — rendered when the user tracks them, hidden when they don't
 
@@ -61,7 +63,7 @@ The images below come from a built-in fictional example (data included in `examp
 
 The same report adapts to your data density — no errors, no empty charts, no guilt:
 
-![four scenarios](docs/screenshots/scenarios-grid.png)
+![four scenarios](assets/images/scenarios-grid.png)
 
 | You have | What the report shows |
 |:--|:--|
@@ -137,7 +139,7 @@ fitlore/
 │   ├── dashboard-demo.html       # generated demo report — double-click to preview
 │   └── scenarios/                # four-density demo: 1 day / 1 week / 1 month / sparse
 │                                 #   → open scenarios/index.html to switch between them
-├── docs/screenshots/             # images used in this README
+├── assets/images/             # images used in this README
 ├── CHANGELOG.md
 └── LICENSE
 ```

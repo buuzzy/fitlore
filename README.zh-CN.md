@@ -8,7 +8,7 @@
 
 一套 AI Agent 健身追踪技能，**低频原生**设计——为那些不会每天打卡的真实用户而做。
 
-![fitlore 仪表盘](docs/screenshots/showcase-overview.png)
+![fitlore 仪表盘](assets/images/showcase-overview.png)
 
 ## 为什么是 fitlore
 
@@ -47,13 +47,15 @@ git clone https://github.com/buuzzy/fitlore.git && mkdir -p ~/.workbuddy/skills 
 
 下面两张图来自内置的虚构示例用户（数据在 `examples/` 里，随仓库分发），一次性点亮技能的全部可视化能力——身体成分、训练节奏、动作进步、睡眠：
 
-![训练板块](docs/screenshots/showcase-training.png)
+![周训练](assets/images/showcase-weekly.png)
+
+![动作进步](assets/images/showcase-exercise.png)
 
 - **体重 −4.4kg、体脂 −4.4pp、肌肉量 +0.7kg**——减脂成功的教科书形态：两条线下行，肌肉守住
 - **12 周 39 次训练**，第 7 周计划性减载如实显示为回落，不隐藏
 - **所有动作线全部向上**——进步是结果，不是目标
 
-![睡眠](docs/screenshots/showcase-sleep.png)
+![睡眠](assets/images/showcase-sleep.png)
 
 - **睡眠时长与主观分随训练同步改善**——用户追踪就展示，不追踪就隐藏
 
@@ -61,7 +63,7 @@ git clone https://github.com/buuzzy/fitlore.git && mkdir -p ~/.workbuddy/skills 
 
 同一套报告，随你的数据密度自适应——不报错、不出空图、不制造愧疚：
 
-![四种场景](docs/screenshots/scenarios-grid.png)
+![四种场景](assets/images/scenarios-grid.png)
 
 | 你手里有什么 | 报告展示什么 |
 |:--|:--|
@@ -137,7 +139,7 @@ fitlore/
 │   ├── dashboard-demo.html       # 示例报告成品——双击预览
 │   └── scenarios/                # 四种数据密度演示：1 天 / 1 周 / 1 个月 / 零散
 │                                 #   → 打开 scenarios/index.html 可切换查看
-├── docs/screenshots/             # README 配图
+├── assets/images/             # README 配图
 ├── CHANGELOG.md
 └── LICENSE
 ```
