@@ -46,7 +46,7 @@ python3 <技能目录>/assets/build_dashboard.py --data <数据json> --out fitne
   "generated_at": "2026-10-18",
   "notes": ["长假停训一周", "10-12 起执行新计划"],
   "measurements": [
-    {"date": "2026-08-02", "weight_kg": 79.8, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null}
+    {"date": "2026-08-02", "weight_kg": 79.8, "bodyfat_pct": null, "muscle_kg": null, "sleep_h": null, "sleep_score": null}
   ],
   "weeks": [
     {"week": "W32", "sessions": 3, "volume_kg": 18200, "duration_min": 190}

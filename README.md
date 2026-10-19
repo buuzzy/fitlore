@@ -8,7 +8,7 @@
 
 An AI-agent skill that tracks your workouts and body metrics — built **low-frequency-native** for people who *don't* log every day.
 
-![fitlore dashboard](docs/screenshots/dashboard-top.png)
+![fitlore dashboard](docs/screenshots/showcase-overview.png)
 
 ## Why fitlore
 
@@ -65,6 +65,17 @@ Dashboards are built with one command — `assets/build_dashboard.py` injects yo
 - **"Not recorded ≠ not measured"** — before declaring any dimension "long empty", the skill must ask you once. People usually have the data; they just don't hand it over.
 - **No-progress-shaming by default** — unless you explicitly pick strength as your goal, "didn't add weight" is never framed as a failure. Holding weight while cutting is a win.
 - **Pain grading baked in** — soreness / tightness / sharp pain / numbness each get a different protocol, checked in every review. Safety red lines outrank every training suggestion.
+
+## Real 12-week run
+
+The images above come from the author's own 12-week body-recomposition program, tracked with this skill and shared with permission — a real "not logged every day" cadence, including a COVID week and a 4-week holiday gap rendered honestly as blanks.
+
+- **Weight −2kg, body fat −5pp, 25 sessions, 46.3t total volume**
+- Muscle mass trended flat-to-up while fat dropped — the signature of a successful recomp
+- Strength goal while cutting is *holding*, not adding: the flat deadlift line at 120kg is a win, not a plateau
+- The exercise chart splits kg and lbs (machine stack) into separate panels — never cross-compared
+
+![training sections](docs/screenshots/showcase-training.png)
 
 ## Data & privacy
 
