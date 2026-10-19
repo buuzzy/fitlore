@@ -1,0 +1,42 @@
+{
+  "user": "阿明（虚构示例）",
+  "title": "场景演示 · 零散数据（典型低频用户）",
+  "period": "2026-08-01 ~ 2026-10-18",
+  "generated_at": "2026-10-18",
+  "notes": [
+    "典型低频用户：两个半月里只记了 3 次体重、10 次训练",
+    "中间连续 5 周完全未记录——周训练图显示为空白。空白只代表「没记」，不代表「没练」，技能不会追责",
+    "数据密度：低——趋势图连线仅示意方向，不计算速率；KPI 仍能给出大跨度对比（-2.3kg / 10 次训练）",
+    "动作进步是低频用户的主要激励来源：卧推 8 月 60kg → 10 月 65kg，一眼可见"
+  ],
+  "measurements": [
+    {"date": "2026-08-02", "weight_kg": 79.8, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-09-20", "weight_kg": 78.3, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-10-17", "weight_kg": 77.5, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null}
+  ],
+  "weeks": [
+    {"week": "W32", "sessions": 3, "volume_kg": 17800, "duration_min": 175},
+    {"week": "W33", "sessions": 2, "volume_kg": 12600, "duration_min": 115},
+    {"week": "W34", "sessions": 0, "volume_kg": 0, "duration_min": 0},
+    {"week": "W35", "sessions": 0, "volume_kg": 0, "duration_min": 0},
+    {"week": "W36", "sessions": 0, "volume_kg": 0, "duration_min": 0},
+    {"week": "W37", "sessions": 0, "volume_kg": 0, "duration_min": 0},
+    {"week": "W38", "sessions": 0, "volume_kg": 0, "duration_min": 0},
+    {"week": "W39", "sessions": 2, "volume_kg": 13100, "duration_min": 120},
+    {"week": "W40", "sessions": 0, "volume_kg": 0, "duration_min": 0},
+    {"week": "W41", "sessions": 3, "volume_kg": 19200, "duration_min": 185}
+  ],
+  "exercises": [
+    {"name": "卧推", "unit": "kg", "points": [
+      {"date": "2026-08-03", "weight": 60, "reps": 8},
+      {"date": "2026-08-17", "weight": 60, "reps": 10},
+      {"date": "2026-09-20", "weight": 62.5, "reps": 8},
+      {"date": "2026-10-17", "weight": 65, "reps": 8}
+    ]},
+    {"name": "高位下拉", "unit": "lbs", "points": [
+      {"date": "2026-08-03", "weight": 100, "reps": 10},
+      {"date": "2026-09-20", "weight": 105, "reps": 10},
+      {"date": "2026-10-17", "weight": 110, "reps": 10}
+    ]}
+  ]
+}

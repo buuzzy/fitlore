@@ -1,0 +1,78 @@
+{
+  "user": "阿明（虚构示例用户）",
+  "title": "2026-10 月度复盘 · 数据可视化（示例）",
+  "period": "2026-08-01 ~ 2026-10-17",
+  "generated_at": "2026-10-18",
+  "notes": [
+    "本示例用户只追踪体重与训练两项数据，体脂、睡眠等维度未开启，对应板块已自动隐藏",
+    "W35 为长假停训周，无训练记录，属正常波动",
+    "高位下拉使用器械配重单位 lbs，与哑铃动作的 kg 分开展示，不可跨图对比"
+  ],
+  "measurements": [
+    {"date": "2026-08-02", "weight_kg": 79.8, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-08-06", "weight_kg": 79.5, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-08-10", "weight_kg": 79.6, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-08-14", "weight_kg": 79.2, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-08-18", "weight_kg": 78.9, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-08-23", "weight_kg": 78.7, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-08-27", "weight_kg": 78.4, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-08-31", "weight_kg": 78.5, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-09-04", "weight_kg": 78.1, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-09-08", "weight_kg": 77.9, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-09-12", "weight_kg": 77.6, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-09-16", "weight_kg": 77.4, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-09-20", "weight_kg": 77.1, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-09-25", "weight_kg": 76.8, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-09-30", "weight_kg": 76.6, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-10-04", "weight_kg": 76.5, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-10-09", "weight_kg": 76.2, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-10-14", "weight_kg": 75.9, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-10-17", "weight_kg": 75.8, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null}
+  ],
+  "weeks": [
+    {"week": "W32", "sessions": 3, "volume_kg": 18200, "duration_min": 190},
+    {"week": "W33", "sessions": 4, "volume_kg": 21500, "duration_min": 255},
+    {"week": "W34", "sessions": 3, "volume_kg": 17800, "duration_min": 175},
+    {"week": "W35", "sessions": 0, "volume_kg": 0, "duration_min": 0},
+    {"week": "W36", "sessions": 3, "volume_kg": 19400, "duration_min": 205},
+    {"week": "W37", "sessions": 4, "volume_kg": 22300, "duration_min": 260},
+    {"week": "W38", "sessions": 3, "volume_kg": 20100, "duration_min": 190},
+    {"week": "W39", "sessions": 3, "volume_kg": 18800, "duration_min": 185},
+    {"week": "W40", "sessions": 2, "volume_kg": 15200, "duration_min": 120},
+    {"week": "W41", "sessions": 3, "volume_kg": 19700, "duration_min": 195}
+  ],
+  "exercises": [
+    {"name": "卧推", "unit": "kg", "points": [
+      {"date": "2026-08-03", "weight": 60, "reps": 8},
+      {"date": "2026-08-17", "weight": 62.5, "reps": 8},
+      {"date": "2026-08-31", "weight": 65, "reps": 8},
+      {"date": "2026-09-14", "weight": 65, "reps": 8},
+      {"date": "2026-09-28", "weight": 67.5, "reps": 8},
+      {"date": "2026-10-12", "weight": 70, "reps": 6}
+    ]},
+    {"name": "深蹲", "unit": "kg", "points": [
+      {"date": "2026-08-05", "weight": 80, "reps": 8},
+      {"date": "2026-08-19", "weight": 85, "reps": 8},
+      {"date": "2026-09-02", "weight": 87.5, "reps": 6},
+      {"date": "2026-09-16", "weight": 90, "reps": 6},
+      {"date": "2026-09-30", "weight": 92.5, "reps": 6},
+      {"date": "2026-10-12", "weight": 95, "reps": 6}
+    ]},
+    {"name": "硬拉", "unit": "kg", "points": [
+      {"date": "2026-08-07", "weight": 100, "reps": 5},
+      {"date": "2026-08-21", "weight": 105, "reps": 5},
+      {"date": "2026-09-04", "weight": 110, "reps": 4},
+      {"date": "2026-09-18", "weight": 112.5, "reps": 4},
+      {"date": "2026-10-05", "weight": 115, "reps": 4},
+      {"date": "2026-10-12", "weight": 120, "reps": 4}
+    ]},
+    {"name": "高位下拉", "unit": "lbs", "points": [
+      {"date": "2026-08-03", "weight": 100, "reps": 10},
+      {"date": "2026-08-17", "weight": 100, "reps": 11},
+      {"date": "2026-08-31", "weight": 105, "reps": 10},
+      {"date": "2026-09-14", "weight": 110, "reps": 10},
+      {"date": "2026-09-28", "weight": 110, "reps": 11},
+      {"date": "2026-10-12", "weight": 115, "reps": 10}
+    ]}
+  ]
+}

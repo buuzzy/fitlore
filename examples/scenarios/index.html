@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>fitlore 演示 · 不同数据量下的展示效果</title>
+<style>
+  :root {
+    --bg: #f5f7fa; --card: #ffffff; --border: #e5e9f0;
+    --text: #1f2937; --muted: #6b7280; --blue: #3b82f6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); padding: 28px 16px 8px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 700; }
+  .sub { color: var(--muted); font-size: 13px; margin: 6px 0 18px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tab {
+    padding: 9px 16px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--card); cursor: pointer; font-size: 14px; font-weight: 600;
+    color: var(--muted); transition: all .15s;
+  }
+  .tab.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .explain {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 14px; font-size: 13px; line-height: 1.7;
+  }
+  .explain b { font-size: 14px; }
+  .explain ul { padding-left: 18px; margin-top: 6px; }
+  .explain li { margin-bottom: 3px; }
+  .frame-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; margin-bottom: 24px;
+  }
+  iframe { width: 100%; height: 1400px; border: 0; display: block; background: #fff; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0 30px; }
+  th, td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; background: var(--card); }
+  th { background: #eef2f7; font-weight: 600; }
+  td.yes { color: #059669; font-weight: 600; }
+  td.no { color: #9ca3af; }
+  .hint { color: var(--muted); font-size: 12px; margin-bottom: 30px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>fitlore 演示 · 不同数据量下的展示效果</h1>
+  <div class="sub">同一套技能，四个真实生成的报告场景。点标签切换，下方立即渲染对应场景的完整报告。</div>
+
+  <div class="tabs">
+    <div class="tab active" data-s="1day">① 只记 1 天</div>
+    <div class="tab" data-s="1week">② 记录 1 周</div>
+    <div class="tab" data-s="1month">③ 记录 1 个月</div>
+    <div class="tab" data-s="sparse">④ 零散数据（两三个半月记几次）</div>
+  </div>
+
+  <div class="explain" id="explain"></div>
+
+  <div class="frame-box"><iframe id="frame" src="1day/dashboard.html"></iframe></div>
+
+  <h1 style="font-size:17px;">四种场景的行为对照</h1>
+  <table>
+    <tr><th>展示元素</th><th>1 天</th><th>1 周</th><th>1 个月</th><th>零散（两三个半月）</th></tr>
+    <tr><td>指标卡</td><td>单点值 +「暂无趋势」</td><td class="yes">出现变化值（-0.4kg）</td><td class="yes">变化值 + 变化区间</td><td class="yes">大跨度对比（-2.3kg）</td></tr>
+    <tr><td>体重趋势图</td><td>孤立单点</td><td class="yes">两点连线，只谈方向</td><td class="yes">完整趋势线，可谈速率</td><td class="yes">三个稀疏点，连线仅示意方向</td></tr>
+    <tr><td>周训练图</td><td>单根柱</td><td>单根柱（仅 1 周）</td><td class="yes">4 周柱状 + 容量折线</td><td class="yes">10 周全景，断训 5 周显示为空白</td></tr>
+    <tr><td>动作进步图</td><td>孤立点</td><td class="yes">两点对比（上次 vs 这次）</td><td class="yes">清晰阶梯，最出成就感</td><td class="yes">大跨度阶梯，低频用户的核心激励</td></tr>
+    <tr><td>睡眠板块</td><td class="no">隐藏（未开启）</td><td class="no">隐藏（未开启）</td><td class="no">隐藏（未开启）</td><td class="no">隐藏（未开启）</td></tr>
+    <tr><td>密度标注</td><td>不标注（单点）</td><td>「只谈方向」</td><td>「趋势可信」</td><td>「连线仅示意方向，不算速率」</td></tr>
+    <tr><td>趋势结论口径</td><td>只报事实，不判趋势</td><td>点对点方向</td><td>区间均值 + 速率</td><td>只谈方向，绝不假装有趋势</td></tr>
+  </table>
+
+  <div class="hint">以上四个场景均由 fitlore 的 build_dashboard.py 从不同 data.json 真实构建——用户数据量决定展示形态，技能行为不变。零散数据场景就是本技能的设计原点：不改变你的懒惰，照样看清变化。</div>
+</div>
+
+<script>
+const SCENARIOS = {
+  "1day": `<b>① 只记 1 天 —— 什么都没有，但一切正常</b>
+    <ul>
+      <li>指标卡显示「体重 78.2kg（仅 1 个数据点，暂无趋势）」，训练卡显示 1 次 / 5.2t</li>
+      <li>趋势图以孤立点诚实呈现，不硬画趋势线；体脂、睡眠板块自动隐藏</li>
+      <li>这是每个用户的起点：技能不催记录、不制造焦虑，图会随着记录自然长出来</li>
+    </ul>`,
+  "1week": `<b>② 记录 1 周 —— 第一批变化值出现</b>
+    <ul>
+      <li>KPI 卡出现第一个变化值：「体重 -0.4kg」「累计 3 次」</li>
+      <li>动作图出现「上次 60kg → 这次 62.5kg」的对比感——记录的意义第一次可见</li>
+      <li>趋势口径自动降级为「点对点、只谈方向」，不会用两个点算速率</li>
+    </ul>`,
+  "1month": `<b>③ 记录 1 个月 —— 进入「密数据」档位</b>
+    <ul>
+      <li>9 个体重点、4 周柱状图、动作阶梯图齐全，头部自动标注「数据密度：高，趋势线可信」</li>
+      <li>趋势方法自动切换为区间均值对比，速率类结论（每周降多少）从此才允许出现</li>
+      <li>这是复盘价值最大的阶段：容量趋势、动作阶梯、体重下行一目了然</li>
+    </ul>`,
+  "sparse": `<b>④ 零散数据 —— 本技能的设计原点（典型低频用户）</b>
+    <ul>
+      <li>两个半月只记 3 次体重、10 次训练，中间连续 5 周完全空白——周训练图如实显示，不虚构、不追责</li>
+      <li>密度标注自动降为「低：连线仅示意方向，不算速率」——三个点算出的速率是噪声，技能拒绝假装有趋势</li>
+      <li>但 KPI 照样给出大跨度对比「-2.3kg」、动作图照样显示「卧推 60 → 65kg」——<b>低频用户靠大跨度对比获得激励，这正是 fitlore 与每日打卡型产品的根本区别</b></li>
+    </ul>`
+};
+
+const tabs = document.querySelectorAll(".tab");
+const frame = document.getElementById("frame");
+const explain = document.getElementById("explain");
+
+function show(key, btn) {
+  tabs.forEach(t => t.classList.remove("active"));
+  btn.classList.add("active");
+  frame.src = key + "/dashboard.html";
+  explain.innerHTML = SCENARIOS[key];
+}
+tabs.forEach(t => t.addEventListener("click", () => show(t.dataset.s, t)));
+explain.innerHTML = SCENARIOS["1day"];
+</script>
+</body>
+</html>

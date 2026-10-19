@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>健身数据报告</title>
+<style>
+  :root {
+    --bg: #f5f7fa; --card: #ffffff; --border: #e5e9f0;
+    --text: #1f2937; --muted: #6b7280;
+    --blue: #3b82f6; --green: #10b981; --amber: #f59e0b; --purple: #8b5cf6; --red: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--text); padding: 32px 16px;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+  header { margin-bottom: 24px; }
+  header h1 { font-size: 24px; font-weight: 700; }
+  header .meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .kpi .label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .kpi .value { font-size: 22px; font-weight: 700; }
+  .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .up { color: var(--red); } .down { color: var(--green); } .flat { color: var(--muted); }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px; margin-bottom: 20px;
+  }
+  .card h2 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .card .desc { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .chart { width: 100%; height: 320px; }
+  .chart.tall { height: 380px; }
+  .notes { padding-left: 18px; }
+  .notes li { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  footer { text-align: center; font-size: 12px; color: var(--muted); padding: 12px 0 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title">健身数据报告</h1>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card" id="sec-body">
+    <h2>体重 / 体脂趋势</h2>
+    <div class="desc">同条件测量点之间的对比才有意义；缺测日期表示未追踪，不代表没有变化。</div>
+    <div id="chart-body" class="chart tall"></div>
+  </div>
+
+  <div class="card" id="sec-weekly">
+    <h2>周训练频率与容量</h2>
+    <div class="desc">柱状为每周训练次数，折线为每周总容量（重量 × 次数 × 组数）。停训周为 0，属正常波动。</div>
+    <div id="chart-weekly" class="chart"></div>
+  </div>
+
+  <div class="card" id="sec-exercise">
+    <h2>动作重量进步</h2>
+    <div class="desc">各动作记录重量的变化。不同单位体系（kg / lbs / 器械配重）分图展示，不可跨图对比。</div>
+    <div id="exercise-charts"></div>
+  </div>
+
+  <div class="card" id="sec-sleep">
+    <h2>睡眠</h2>
+    <div class="desc">折线为睡眠时长，柱状为主观评分（1-10）。主观清醒度比时长更能反映质量。</div>
+    <div id="chart-sleep" class="chart"></div>
+  </div>
+
+  <div class="card" id="sec-notes" v-if="true">
+    <h2>备注</h2>
+    <ul class="notes" id="notes"></ul>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>__ECHARTS_JS__</script>
+<script>
+const DATA = __DATA_JSON__;
+
+function el(id) { return document.getElementById(id); }
+function show(id, yes) { el(id).style.display = yes ? "" : "none"; }
+function fmt(n, d) { return (n == null || isNaN(n)) ? "—" : Number(n).toFixed(d == null ? 1 : d); }
+function deltaClass(v, goodWhenDown) {
+  if (v == null || Math.abs(v) < 0.05) return "flat";
+  const isDown = v < 0;
+  const isGood = goodWhenDown ? isDown : !isDown;
+  return isGood ? "down" : "up";
+}
+function arrow(v) { if (v == null || Math.abs(v) < 0.05) return "→"; return v > 0 ? "▲" : "▼"; }
+
+document.title = DATA.title;
+el("title").textContent = DATA.title;
+el("meta").textContent = [DATA.user ? "用户：" + DATA.user : "", DATA.period ? "周期：" + DATA.period : "", "生成于 " + DATA.generated_at, DATA.density_note || ""].filter(Boolean).join(" · ");
+el("footer").textContent = "由 fitlore 生成 · 数据仅为个人训练记录，不构成医疗建议";
+
+/* ---------- KPI ---------- */
+const ms = (DATA.measurements || []).filter(m => m && m.date);
+const wPts = ms.filter(m => m.weight_kg != null);
+const bfPts = ms.filter(m => m.bodyfat_pct != null);
+const weeks = DATA.weeks || [];
+const totalSessions = weeks.reduce((s, w) => s + (w.sessions || 0), 0);
+const totalVolume = weeks.reduce((s, w) => s + (w.volume_kg || 0), 0);
+
+const kpiList = [];
+if (wPts.length >= 2) {
+  const first = wPts[0], last = wPts[wPts.length - 1];
+  const d = +(last.weight_kg - first.weight_kg).toFixed(1);
+  kpiList.push({ label: "体重变化", value: (d > 0 ? "+" : "") + d + " kg", cls: deltaClass(d, true),
+    sub: fmt(first.weight_kg) + " → " + fmt(last.weight_kg) + " kg（" + first.date + " ~ " + last.date + "）" });
+}
+if (bfPts.length >= 2) {
+  const first = bfPts[0], last = bfPts[bfPts.length - 1];
+  const d = +(last.bodyfat_pct - first.bodyfat_pct).toFixed(1);
+  kpiList.push({ label: "体脂变化", value: (d > 0 ? "+" : "") + d + " %", cls: deltaClass(d, true),
+    sub: fmt(first.bodyfat_pct) + "% → " + fmt(last.bodyfat_pct) + "%" });
+}
+if (totalSessions > 0) {
+  kpiList.push({ label: "累计训练次数", value: totalSessions + " 次", cls: "",
+    sub: "共 " + weeks.length + " 周" });
+}
+if (totalVolume > 0) {
+  kpiList.push({ label: "累计训练容量", value: (totalVolume / 1000).toFixed(1) + " t", cls: "",
+    sub: "重量 × 次数 × 组数 的总和" });
+}
+if (wPts.length === 1) {
+  kpiList.push({ label: "体重", value: fmt(wPts[0].weight_kg) + " kg", cls: "", sub: "仅 1 个数据点（" + wPts[0].date + "），暂无趋势" });
+}
+el("kpis").innerHTML = kpiList.map(k =>
+  '<div class="kpi"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value +
+  '</div><div class="sub">' + k.sub + '</div></div>').join("");
+if (kpiList.length === 0) show("kpis", false);
+
+/* ---------- charts ---------- */
+const charts = [];
+function mkChart(id) { const c = echarts.init(el(id)); charts.push(c); return c; }
+window.addEventListener("resize", () => charts.forEach(c => c.resize()));
+
+const palette = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4", "#84cc16", "#f97316"];
+const axisCommon = { axisLine: { lineStyle: { color: "#d1d5db" } }, axisLabel: { color: "#6b7280" }, splitLine: { lineStyle: { color: "#eef1f5" } } };
+const tipCommon = { trigger: "axis", textStyle: { fontSize: 12 } };
+
+/* 体重 / 体脂 */
+if (wPts.length >= 1 || bfPts.length >= 1) {
+  const c = mkChart("chart-body");
+  const series = [];
+  const hasBf = bfPts.length >= 1;
+  series.push({
+    name: "体重 kg", type: "line", symbolSize: 6,
+    data: wPts.map(m => [m.date, m.weight_kg]),
+    lineStyle: { width: 2.5, color: palette[0] }, itemStyle: { color: palette[0] }
+  });
+  if (hasBf) series.push({
+    name: "体脂 %", type: "line", yAxisIndex: 1, symbolSize: 6,
+    data: bfPts.map(m => [m.date, m.bodyfat_pct]),
+    lineStyle: { width: 2, type: "dashed", color: palette[1] }, itemStyle: { color: palette[1] }
+  });
+  const yAxis = [Object.assign({ type: "value", scale: true, name: "kg" }, axisCommon)];
+  if (hasBf) yAxis.push(Object.assign({ type: "value", scale: true, name: "%", position: "right" }, axisCommon));
+  c.setOption({ color: palette, tooltip: tipCommon, legend: { top: 0, textStyle: { fontSize: 12 } },
+    grid: { left: 50, right: hasBf ? 55 : 30, top: 36, bottom: 30 }, xAxis: Object.assign({ type: "time" }, axisCommon), yAxis, series });
+} else show("sec-body", false);
+
+/* 周训练 */
+if (totalSessions > 0) {
+  const c = mkChart("chart-weekly");
+  const hasVol = weeks.some(w => w.volume_kg != null && w.volume_kg > 0);
+  const series = [{
+    name: "训练次数", type: "bar", barMaxWidth: 26,
+    data: weeks.map(w => w.sessions || 0),
+    itemStyle: { color: palette[0], borderRadius: [4, 4, 0, 0] }
+  }];
+  if (hasVol) series.push({
+    name: "总容量 kg", type: "line", yAxisIndex: 1, symbolSize: 6,
+    data: weeks.map(w => w.volume_kg || null),
+    lineStyle: { width: 2, color: palette[2] }, itemStyle: { color: palette[2] }
+  });
+  const yAxis = [Object.assign({ type: "value", minInterval: 1, name: "次" }, axisCommon)];
+  if (hasVol) yAxis.push(Object.assign({ type: "value", name: "kg", position: "right" }, axisCommon));
+  c.setOption({ color: palette, tooltip: tipCommon, legend: { top: 0, textStyle: { fontSize: 12 } },
+    grid: { left: 60, right: hasVol ? 60 : 30, top: 36, bottom: 30 },
+    xAxis: Object.assign({ type: "category", data: weeks.map(w => w.week) }, axisCommon), yAxis, series });
+} else show("sec-weekly", false);
+
+/* 动作重量（按单位分组） */
+const exs = (DATA.exercises || []).filter(e => e.points && e.points.length >= 1);
+if (exs.length > 0) {
+  const units = [...new Set(exs.map(e => e.unit || "未知单位"))];
+  const host = el("exercise-charts");
+  units.forEach((unit, ui) => {
+    const div = document.createElement("div");
+    div.className = "chart tall";
+    div.style.marginTop = ui > 0 ? "8px" : "0";
+    host.appendChild(div);
+    const c = echarts.init(div); charts.push(c);
+    const group = exs.filter(e => (e.unit || "未知单位") === unit);
+    const series = group.map((e, i) => ({
+      name: e.name, type: "line", symbolSize: 7,
+      data: e.points.map(p => [p.date, p.weight]),
+      lineStyle: { width: 2, color: palette[i % palette.length] },
+      itemStyle: { color: palette[i % palette.length] },
+      label: { show: true, formatter: p => p.value[1], fontSize: 10, color: "#6b7280" }
+    }));
+    c.setOption({ color: palette, tooltip: Object.assign({}, tipCommon,
+        { formatter: ps => ps.map(p => p.seriesName + " " + p.value[1] + unit + "（" + p.value[0] + "）").join("<br>") }),
+      legend: { top: 0, textStyle: { fontSize: 12 } },
+      grid: { left: 55, right: 30, top: 36, bottom: 30 },
+      xAxis: Object.assign({ type: "time" }, axisCommon),
+      yAxis: Object.assign({ type: "value", scale: true, name: unit }, axisCommon), series });
+  });
+} else show("sec-exercise", false);
+
+/* 睡眠 */
+const slPts = ms.filter(m => m.sleep_h != null || m.sleep_score != null);
+if (slPts.some(m => m.sleep_h != null) || slPts.some(m => m.sleep_score != null)) {
+  const c = mkChart("chart-sleep");
+  const hasH = slPts.some(m => m.sleep_h != null);
+  const hasS = slPts.some(m => m.sleep_score != null);
+  const series = [];
+  if (hasH) series.push({ name: "睡眠时长 h", type: "line", symbolSize: 6,
+    data: slPts.filter(m => m.sleep_h != null).map(m => [m.date, m.sleep_h]),
+    lineStyle: { width: 2.5, color: palette[5] }, itemStyle: { color: palette[5] } });
+  if (hasS) series.push({ name: "主观评分", type: "bar", yAxisIndex: hasH ? 1 : 0, barMaxWidth: 14,
+    data: slPts.filter(m => m.sleep_score != null).map(m => [m.date, m.sleep_score]),
+    itemStyle: { color: palette[3], opacity: 0.6, borderRadius: [3, 3, 0, 0] } });
+  const yAxis = [Object.assign({ type: "value", scale: hasH, name: hasH ? "h" : "分" }, axisCommon)];
+  if (hasH && hasS) yAxis.push(Object.assign({ type: "value", max: 10, name: "分", position: "right" }, axisCommon));
+  c.setOption({ color: palette, tooltip: tipCommon, legend: { top: 0, textStyle: { fontSize: 12 } },
+    grid: { left: 50, right: hasH && hasS ? 50 : 30, top: 36, bottom: 30 }, xAxis: Object.assign({ type: "time" }, axisCommon), yAxis, series });
+} else show("sec-sleep", false);
+
+/* 备注 */
+if (DATA.notes && DATA.notes.length > 0) {
+  el("notes").innerHTML = DATA.notes.map(n => "<li>" + n + "</li>").join("");
+} else show("sec-notes", false);
+</script>
+</body>
+</html>

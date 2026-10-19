@@ -1,0 +1,25 @@
+{
+  "user": "阿明（虚构示例）",
+  "title": "场景演示 · 只记录了 1 天",
+  "period": "2026-10-18",
+  "generated_at": "2026-10-18",
+  "notes": [
+    "首次记录：只有 1 天数据。指标卡显示单点值并注明「暂无趋势」，趋势图以孤立点呈现",
+    "没有趋势判断——这是正常起点，不是缺憾。继续记，图自然会长出来",
+    "体脂、睡眠等维度未开启，对应板块自动隐藏"
+  ],
+  "measurements": [
+    {"date": "2026-10-18", "weight_kg": 78.2, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null}
+  ],
+  "weeks": [
+    {"week": "本周", "sessions": 1, "volume_kg": 5200, "duration_min": 55}
+  ],
+  "exercises": [
+    {"name": "卧推", "unit": "kg", "points": [
+      {"date": "2026-10-18", "weight": 60, "reps": 8}
+    ]},
+    {"name": "高位下拉", "unit": "lbs", "points": [
+      {"date": "2026-10-18", "weight": 100, "reps": 10}
+    ]}
+  ]
+}

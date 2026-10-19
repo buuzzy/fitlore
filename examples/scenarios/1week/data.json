@@ -1,0 +1,28 @@
+{
+  "user": "阿明（虚构示例）",
+  "title": "场景演示 · 记录了 1 周",
+  "period": "2026-10-12 ~ 2026-10-18",
+  "generated_at": "2026-10-18",
+  "notes": [
+    "第 1 周记录完成：2 个体重点、3 次训练，KPI 开始出现变化值",
+    "数据密度尚低，趋势只谈方向不谈速率",
+    "动作图开始有「上次 vs 这次」的对比感"
+  ],
+  "measurements": [
+    {"date": "2026-10-12", "weight_kg": 78.4, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null},
+    {"date": "2026-10-18", "weight_kg": 78.0, "bodyfat_pct": null, "sleep_h": null, "sleep_score": null}
+  ],
+  "weeks": [
+    {"week": "W42", "sessions": 3, "volume_kg": 18100, "duration_min": 170}
+  ],
+  "exercises": [
+    {"name": "卧推", "unit": "kg", "points": [
+      {"date": "2026-10-12", "weight": 60, "reps": 8},
+      {"date": "2026-10-18", "weight": 62.5, "reps": 8}
+    ]},
+    {"name": "高位下拉", "unit": "lbs", "points": [
+      {"date": "2026-10-12", "weight": 100, "reps": 10},
+      {"date": "2026-10-18", "weight": 105, "reps": 10}
+    ]}
+  ]
+}
