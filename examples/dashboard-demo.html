@@ -169,15 +169,14 @@ if (totalSessions > 0) {
     sub: "共 " + weeks.length + " 周" });
 }
 if (totalVolume > 0) {
-  kpiList.push({ label: "累计训练容量", value: (totalVolume / 1000).toFixed(1) + " t", cls: "",
-    sub: "重量 × 次数 × 组数 的总和" });
+  kpiList.push({ label: "累计训练容量", value: (totalVolume / 1000).toFixed(1) + " t", cls: "" });
 }
 if (wPts.length === 1) {
   kpiList.push({ label: "体重", value: fmt(wPts[0].weight_kg) + " kg", cls: "", sub: "仅 1 个数据点（" + wPts[0].date + "），暂无趋势" });
 }
 el("kpis").innerHTML = kpiList.map(k =>
   '<div class="kpi"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value +
-  '</div><div class="sub">' + k.sub + '</div></div>').join("");
+  '</div>' + (k.sub ? '<div class="sub">' + k.sub + '</div>' : '') + '</div>').join("");
 if (kpiList.length === 0) show("kpis", false);
 
 /* ---------- charts ---------- */
