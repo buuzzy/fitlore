@@ -66,14 +66,14 @@ Dashboards are built with one command — `assets/build_dashboard.py` injects yo
 - **No-progress-shaming by default** — unless you explicitly pick strength as your goal, "didn't add weight" is never framed as a failure. Holding weight while cutting is a win.
 - **Pain grading baked in** — soreness / tightness / sharp pain / numbness each get a different protocol, checked in every review. Safety red lines outrank every training suggestion.
 
-## Real 12-week run
+## A complete 12-week example
 
-The images above come from the author's own 12-week body-recomposition program, tracked with this skill and shared with permission — a real "not logged every day" cadence, including a COVID week and a 4-week holiday gap rendered honestly as blanks.
+The images above come from a built-in fictional example (data included in `examples/`) that exercises every visualization the skill can render — body composition, training cadence, exercise progress and sleep, all at once:
 
-- **Weight −2kg, body fat −5pp, 25 sessions, 46.3t total volume**
-- Muscle mass trended flat-to-up while fat dropped — the signature of a successful recomp
-- Strength goal while cutting is *holding*, not adding: the flat deadlift line at 120kg is a win, not a plateau
-- The exercise chart splits kg and lbs (machine stack) into separate panels — never cross-compared
+- **Weight −4.4kg, body fat −4.4pp, muscle +0.7kg** — the textbook shape of a successful cut: both down-lines while muscle holds
+- **39 sessions across 12 weeks** with one planned deload week (W7) shown honestly as a dip, not hidden
+- **Sleep duration and subjective score trending up** alongside training — rendered when the user tracks them, hidden when they don't
+- **Every exercise line trending up** — progression as an outcome, not a target
 
 ![training sections](docs/screenshots/showcase-training.png)
 
