@@ -51,26 +51,22 @@
   <div class="kpis" id="kpis"></div>
 
   <div class="card" id="sec-body">
-    <h2>体重 / 体脂趋势</h2>
-    <div class="desc">同条件测量点之间的对比才有意义；缺测日期表示未追踪，不代表没有变化。</div>
+    <h2>体重 / 体脂 / 肌肉量趋势</h2>
     <div id="chart-body" class="chart tall"></div>
   </div>
 
   <div class="card" id="sec-weekly">
     <h2>周训练频率与容量</h2>
-    <div class="desc">柱状为每周训练次数，折线为每周总容量（重量 × 次数 × 组数）。停训周为 0，属正常波动。</div>
     <div id="chart-weekly" class="chart"></div>
   </div>
 
   <div class="card" id="sec-exercise">
     <h2>动作重量进步</h2>
-    <div class="desc">各动作记录重量的变化。不同单位体系（kg / lbs / 器械配重）分图展示，不可跨图对比。</div>
     <div id="exercise-charts"></div>
   </div>
 
   <div class="card" id="sec-sleep">
     <h2>睡眠</h2>
-    <div class="desc">折线为睡眠时长，柱状为主观评分（1-10）。主观清醒度比时长更能反映质量。</div>
     <div id="chart-sleep" class="chart"></div>
   </div>
 
@@ -144,7 +140,7 @@ function arrow(v) { if (v == null || Math.abs(v) < 0.05) return "→"; return v 
 
 document.title = DATA.title;
 el("title").textContent = DATA.title;
-el("meta").textContent = [DATA.user ? "用户：" + DATA.user : "", DATA.period ? "周期：" + DATA.period : "", "生成于 " + DATA.generated_at, DATA.density_note || ""].filter(Boolean).join(" · ");
+el("meta").textContent = [DATA.user ? "用户：" + DATA.user : "", DATA.period ? "周期：" + DATA.period : "", "生成于 " + DATA.generated_at].filter(Boolean).join(" · ");
 el("footer").textContent = "由 fitlore 生成 · 数据仅为个人训练记录，不构成医疗建议";
 
 /* ---------- KPI ---------- */
@@ -193,11 +189,13 @@ const palette = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4
 const axisCommon = { axisLine: { lineStyle: { color: "#d1d5db" } }, axisLabel: { color: "#6b7280" }, splitLine: { lineStyle: { color: "#eef1f5" } } };
 const tipCommon = { trigger: "axis", textStyle: { fontSize: 12 } };
 
-/* 体重 / 体脂 */
+/* 体重 / 体脂 / 肌肉量 */
 if (wPts.length >= 1 || bfPts.length >= 1) {
   const c = mkChart("chart-body");
   const series = [];
   const hasBf = bfPts.length >= 1;
+  const mPts = ms.filter(m => m.muscle_kg != null);
+  const hasMs = mPts.length >= 1;
   series.push({
     name: "体重 kg", type: "line", symbolSize: 6,
     data: wPts.map(m => [m.date, m.weight_kg]),
@@ -207,6 +205,11 @@ if (wPts.length >= 1 || bfPts.length >= 1) {
     name: "体脂 %", type: "line", yAxisIndex: 1, symbolSize: 6,
     data: bfPts.map(m => [m.date, m.bodyfat_pct]),
     lineStyle: { width: 2, type: "dashed", color: palette[1] }, itemStyle: { color: palette[1] }
+  });
+  if (hasMs) series.push({
+    name: "肌肉量 kg", type: "line", symbolSize: 6,
+    data: mPts.map(m => [m.date, m.muscle_kg]),
+    lineStyle: { width: 2, color: palette[3] }, itemStyle: { color: palette[3] }
   });
   const yAxis = [Object.assign({ type: "value", scale: true, name: "kg" }, axisCommon)];
   if (hasBf) yAxis.push(Object.assign({ type: "value", scale: true, name: "%", position: "right" }, axisCommon));

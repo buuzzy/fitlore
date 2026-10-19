@@ -59,32 +59,6 @@ def build(data_path: Path, out_path: Path) -> None:
     data.setdefault("weeks", [])
     data.setdefault("exercises", [])
 
-    # 密度自适应：计算体重数据密度档位，注入报告元信息（低频原生）
-    def _density_note(measurements):
-        pts = [m for m in measurements if m.get("weight_kg") is not None]
-        if len(pts) < 2:
-            return None
-        try:
-            from datetime import date
-            def _d(s):
-                y, m, dd = s.split("-")
-                return date(int(y), int(m), int(dd))
-            span_days = (_d(pts[-1]["date"]) - _d(pts[0]["date"])).days
-            if span_days <= 0:
-                return None
-            per_week = len(pts) / (span_days / 7)
-            if per_week >= 2:
-                return "数据密度：高（约 %.1f 点/周），趋势线可信" % per_week
-            if per_week >= 1:
-                return "数据密度：中（约 %.1f 点/周），看方向为主" % per_week
-            return "数据密度：低（约 %.1f 点/周），连线仅示意方向，不代表逐日变化" % per_week
-        except (ValueError, KeyError):
-            return None
-
-    note = _density_note(data["measurements"])
-    if note:
-        data["density_note"] = note
-
     template = template_path.read_text(encoding="utf-8")
     echarts_js = echarts_path.read_text(encoding="utf-8")
 

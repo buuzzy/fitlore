@@ -52,25 +52,21 @@
 
   <div class="card" id="sec-body">
     <h2>体重 / 体脂 / 肌肉量趋势</h2>
-    <div class="desc">同条件测量点之间的对比才有意义；缺测日期表示未追踪，不代表没有变化。减脂期最理想形态：体重与体脂下行、肌肉量走平或上行。</div>
     <div id="chart-body" class="chart tall"></div>
   </div>
 
   <div class="card" id="sec-weekly">
     <h2>周训练频率与容量</h2>
-    <div class="desc">柱状为每周训练次数，折线为每周总容量（重量 × 次数 × 组数）。停训周为 0，属正常波动。</div>
     <div id="chart-weekly" class="chart"></div>
   </div>
 
   <div class="card" id="sec-exercise">
     <h2>动作重量进步</h2>
-    <div class="desc">各动作记录重量的变化。不同单位体系（kg / lbs / 器械配重）分图展示，不可跨图对比。</div>
     <div id="exercise-charts"></div>
   </div>
 
   <div class="card" id="sec-sleep">
     <h2>睡眠</h2>
-    <div class="desc">折线为睡眠时长，柱状为主观评分（1-10）。主观清醒度比时长更能反映质量。</div>
     <div id="chart-sleep" class="chart"></div>
   </div>
 
@@ -99,7 +95,7 @@ function arrow(v) { if (v == null || Math.abs(v) < 0.05) return "→"; return v 
 
 document.title = DATA.title;
 el("title").textContent = DATA.title;
-el("meta").textContent = [DATA.user ? "用户：" + DATA.user : "", DATA.period ? "周期：" + DATA.period : "", "生成于 " + DATA.generated_at, DATA.density_note || ""].filter(Boolean).join(" · ");
+el("meta").textContent = [DATA.user ? "用户：" + DATA.user : "", DATA.period ? "周期：" + DATA.period : "", "生成于 " + DATA.generated_at].filter(Boolean).join(" · ");
 el("footer").textContent = "由 fitlore 生成 · 数据仅为个人训练记录，不构成医疗建议";
 
 /* ---------- KPI ---------- */
