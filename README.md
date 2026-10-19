@@ -36,6 +36,10 @@ fitlore 不跟这种懒惰搏斗，而是围绕它设计：
 ## 快速开始
 
 ```bash
+# 推荐：npx degit（更快，无 git 历史）
+npx degit buuzzy/fitlore fitlore && mkdir -p ~/.workbuddy/skills && cp -r fitlore ~/.workbuddy/skills/
+
+# 备选：git clone
 git clone https://github.com/buuzzy/fitlore.git && mkdir -p ~/.workbuddy/skills && cp -r fitlore ~/.workbuddy/skills/
 ```
 

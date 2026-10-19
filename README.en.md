@@ -36,6 +36,10 @@ fitlore doesn't fight that. It's designed around it:
 ## Quickstart
 
 ```bash
+# Recommended: npx degit (faster, no git history)
+npx degit buuzzy/fitlore fitlore && mkdir -p ~/.workbuddy/skills && cp -r fitlore ~/.workbuddy/skills/
+
+# Alternative: git clone
 git clone https://github.com/buuzzy/fitlore.git && mkdir -p ~/.workbuddy/skills && cp -r fitlore ~/.workbuddy/skills/
 ```
 
